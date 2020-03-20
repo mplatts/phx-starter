@@ -1,0 +1,9 @@
+<div class="<%= if assigns[:size], do: assigns[:size], else: "w-8 h-8" %> relative inline-block">
+  <div class="group w-full h-full rounded-full overflow-hidden text-center bg-purple table cursor-pointer">
+    <%= if !!@user.avatar do %>
+      <img src="<%= @user.avatar %>" alt="Profile avatar" class="object-cover object-center w-full h-full visible group-hover:hidden" />  
+    <% else %>
+      <span class="table-cell text-white font-bold align-middle"><%= App.User.initials(@user) %></span>
+    <% end %>
+  </div>
+</div>

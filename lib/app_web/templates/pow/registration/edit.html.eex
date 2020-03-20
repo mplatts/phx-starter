@@ -1,0 +1,27 @@
+<%= render_in AppWeb.HelpersView, "_floating_box.html", assigns do %>
+  <h2 class="h2">Account</h2>
+  <%= form_for @changeset, @action, [as: :user, class: "w-full mt-6"], fn f -> %>
+  <%= render AppWeb.HelpersView, "_password_input.html", [form: f, field: :current_password] %>
+    <%= render AppWeb.HelpersView, "_text_input.html", [form: f, field: Pow.Ecto.Schema.user_id_field(@changeset)] %>
+
+    <%= if @changeset.data.unconfirmed_email do %>
+      <div>
+        <p>Click the link in the confirmation email to change your email to <%= content_tag(:span, @changeset.data.unconfirmed_email) %>.</p>
+      </div>
+    <% end %>
+
+    <%= render AppWeb.HelpersView, "_password_input.html", [form: f, field: :password] %>
+    <%= render AppWeb.HelpersView, "_password_input.html", [form: f, field: :password_confirmation] %>
+    
+    <div class="my-6">
+      <%= if @changeset.action do %>
+        <%= render AppWeb.HelpersView, "_notification.html", content: "Oops, something went wrong! Please check the form for errors.", color: "red" %>
+      <% end %>
+    </div>
+    
+    <div class="flex items-center justify-between">
+      <%= submit "Update", class: "btn btn-green" %>
+      <%= link "Delete account", to: Routes.pow_registration_path(@conn, :delete), method: :delete, class: "text-red-500 text-sm hover:underline" %>
+    </div>
+  <% end %>
+<% end %>

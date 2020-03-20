@@ -1,0 +1,65 @@
+<head>
+  <% title = if @conn.assigns[:meta_title], do: @meta_title, else: "App" %>
+  <% description = "This app does amazing things" %>
+  <% url = System.get_env("WEB_HOST") %>
+  <% google_analytics_id = System.get_env("GOOGLE_ANALYTICS_ID") %>
+  <% heap_id = System.get_env("HEAP_ID") %>
+
+  <!-- Core Meta Tags -->
+  <meta charset="utf-8"/>
+  <title><%= title %></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="title" content="<%= title %>">
+  <meta name="description" content="<%= description %>">
+  <%= csrf_meta_tag() %>
+
+  <!-- App Meta Tags -->
+  <link rel="icon" href="<%= Routes.static_path(@conn, "/images/favicon.png") %>" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= url %>">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="<%= description %>">
+  <meta property="og:image" content="<%= url %><%= Routes.static_path(@conn, "/images/for-open-graph.png") %>">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="<%= url %>">
+  <meta property="twitter:title" content="<%= title %>">
+  <meta property="twitter:description" content="<%= description %>">
+  <meta property="twitter:image" content="<%= url %><%= Routes.static_path(@conn, "/images/for-open-graph.png") %>">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet">
+  
+  <!-- 3rd Party Libs -->
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="https://unpkg.com/popper.js@1"></script>
+  <script src="https://unpkg.com/tippy.js@5"></script>
+
+  <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>" defer></script>
+
+  <%= if Mix.env == :prod do %>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= google_analytics_id %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= google_analytics_id %>');
+    </script>
+
+    <!-- Heap -->
+    <%= if length(heap_id) > 0 do %>
+      <script type="text/javascript">
+        window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+            heap.load("<%= heap_id %>");
+      </script>  
+    <% end %>
+    
+  <% end %>
+</head>

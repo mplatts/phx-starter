@@ -1,0 +1,5 @@
+<div class="flex items-center justify-center bg-gray-50 py-12 md:py-24 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full bg-white md:shadow rounded px-4 md:px-8 pt-6 pb-8 mb-4 flex flex-col">
+    <%= @yield %>
+  </div>
+</div>

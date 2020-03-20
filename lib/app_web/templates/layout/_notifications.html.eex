@@ -1,0 +1,15 @@
+<%= if get_flash(@conn, :success) do %>
+  <%= render AppWeb.HelpersView, "_notification.html", content: get_flash(@conn, :success), color: "green" %>
+<% end %>
+
+<%= if get_flash(@conn, :info) do %>
+ <%= render AppWeb.HelpersView, "_notification.html", content: get_flash(@conn, :info), color: "blue" %>
+<% end %>
+
+<%= if get_flash(@conn, :warning) do %>
+ <%= render AppWeb.HelpersView, "_notification.html", content: get_flash(@conn, :warning), color: "yellow" %>
+<% end %>
+
+<%= if get_flash(@conn, :error) do %>
+  <%= render AppWeb.HelpersView, "_notification.html", content: get_flash(@conn, :error), color: "red" %>
+<% end %>

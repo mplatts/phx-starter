@@ -1,0 +1,96 @@
+/* This file is for your main application css. */
+
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+/* purgecss end ignore */
+
+/* HEADINGS */
+.title { @apply w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800;}
+.h1 { @apply my-2 text-3xl leading-tight text-gray-800 font-light;}
+.h2 { @apply my-2 text-2xl font-bold leading-tight text-gray-800;}
+.h3 { @apply my-2 text-lg text-gray-700 font-bold leading-tight;}
+.h4 { @apply my-2 text-gray-700 uppercase font-bold text-xs leading-tight;}
+
+.small-text { @apply text-gray-700 font-light text-sm;}
+
+/* BUTTONS */
+.btn { @apply font-bold py-2 px-4 rounded inline-block ; }
+.btn-sm { @apply font-bold py-1 px-3 rounded text-sm inline-block; }
+.btn-lg { @apply font-bold py-3 px-8 rounded text-lg inline-block; }
+.btn-disabled { @apply opacity-50 cursor-not-allowed; }
+.btn-green { @apply text-white bg-green-500 }
+.btn-green:hover { @apply bg-green-700; }
+.btn-red { @apply text-white bg-red-500 }
+.btn-red:hover { @apply bg-red-700; }
+.btn-gray { @apply bg-gray-500 text-white }
+.btn-gray:hover { @apply text-white bg-gray-700; }
+.btn-blue { @apply text-white bg-blue-500 }
+.btn-blue:hover { @apply bg-blue-700; }
+.btn-yellow { @apply text-white bg-yellow-500 }
+.btn-yellow:hover { @apply bg-yellow-700; }
+
+/* FORMS */
+.has-error { @apply border border-red-500 }
+
+.select-input {
+  @apply block appearance-none w-full bg-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight;
+}
+.select-input:focus {
+  @apply bg-white border-blue-500;
+}
+
+.text-input { 
+  @apply bg-gray-200 appearance-none rounded w-full py-3 px-4 mb-2 text-gray-700 leading-tight; 
+}
+.text-input:focus {
+  @apply bg-white border-blue-500;
+}
+.text-input-front-addon {
+  @apply flex items-center leading-normal bg-gray-300 rounded rounded-r-none border-r-2 border-gray-400 px-3 whitespace-no-wrap text-gray-600;
+}
+.text-input-with-addons {
+  @apply bg-gray-200 appearance-none py-3 px-4 text-gray-700 flex-grow leading-tight relative; 
+}
+.text-input-with-addons:focus {
+  @apply bg-white border-blue-500;
+}
+.text-input-back-addon {
+  @apply flex items-center leading-normal bg-gray-300 rounded rounded-l-none border-l border-gray-400 px-3 whitespace-no-wrap text-gray-600;
+}
+
+/* TABLES */
+.th {
+  @apply py-4 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-500 border-b border-gray-400;
+}
+
+.td {
+  @apply py-4 px-6 border-b border-gray-400;
+}
+
+@tailwind utilities;
+
+/* Give buttons fade in on hover effect */
+button, a {
+  transition: background-color 0.3s ease;
+}
+
+.poppins-font {
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+}
+
+@import "./slim-select.css";
+@import "./markdown.css";
+@import "./google-auth-button.css";
+@import "../../deps/phoenix_live_view/assets/css/live_view.css";
+
+.help-icon {
+  display: inline-block;
+  height: 10px;
+  position: relative;
+  top: -5px;
+}
+
+.animated {
+    visibility: hidden;
+}

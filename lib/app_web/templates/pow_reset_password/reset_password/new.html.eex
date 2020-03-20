@@ -1,0 +1,18 @@
+<%= render_in AppWeb.HelpersView, "_floating_box.html", assigns do %>
+  <h2 class="h2">Reset Password</h2>
+  <%= form_for @changeset, @action, [as: :user, class: "w-full mt-6"], fn f -> %>
+    <%= render AppWeb.HelpersView, "_text_input.html", [form: f, field: :email] %>
+
+    <div class="my-6">
+      <%= if @changeset.action do %>
+        <%= render AppWeb.HelpersView, "_notification.html", content: "Oops, something went wrong! Please check the form for errors.", color: "red" %>
+      <% end %>
+    </div>
+    
+    <div class="flex items-center justify-between">
+      <%= submit "Submit", class: "btn btn-green" %>
+
+      <%= link "Sign in", to: Routes.pow_session_path(@conn, :new), class: "text-gray-500 text-sm hover:underline" %>
+    </div>
+  <% end %>
+<% end %>

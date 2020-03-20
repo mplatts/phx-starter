@@ -1,0 +1,5 @@
+<footer class='w-full text-center border-t border-grey p-4 pin-b bg-gray-700'>
+  <div class="container mx-auto flex justify-end text-gray-500">
+    <%= link "Terms of service", to: Routes.page_path(@conn, :terms), class: "" %> <span class="mx-3">|</span> <%= link "Privacy policy", to: Routes.page_path(@conn, :privacy), class: "" %>
+  </div>
+</footer>

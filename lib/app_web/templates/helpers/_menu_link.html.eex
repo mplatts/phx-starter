@@ -1,0 +1,16 @@
+<% is_active = @conn.request_path == @path %>
+
+<%= if is_active do %>
+  <div 
+    class="block text-gray-700" 
+    href="<%= @path %>">
+    <%= @label %>
+  </div>  
+<% else %>
+  <a 
+    class="block text-gray-500" 
+    href="<%= @path %>">
+    <%= @label %>
+  </a>  
+<% end %>
+

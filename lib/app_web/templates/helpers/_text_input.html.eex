@@ -1,0 +1,12 @@
+<div class="mb-3">
+  <% lab = if assigns[:label], do: assigns[:label], else: @field %>
+  <%= label @form, lab, class: "block text-gray-500 font-bold mb-2" %>
+
+  <div class="">
+    <% has_error = length(error_tag @form, @field) > 0 %>
+    <%= text_input @form, @field, class: "text-input #{if has_error, do: "has-error"}", placeholder: assigns[:placeholder] %>
+    <%= if has_error do %>
+      <p class="text-red-500 text-xs italic"><%= error_tag @form, @field %></p>
+    <% end %>
+  </div>
+</div>

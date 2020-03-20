@@ -1,0 +1,36 @@
+<% has_error = length(error_tag @form, @field) > 0 %>
+
+<div class="mb-3">
+  <% lab = if assigns[:label], do: assigns[:label], else: @field %>
+  <%= label @form, lab, class: "block text-gray-500 font-bold mb-2" %>
+
+  <div class="">
+
+    <div class="flex flex-wrap items-stretch w-full mb-4 relative">
+      <%= if assigns[:front_addon] do %>
+        <div class="flex -mr-px">
+          <div class="text-input-front-addon"><%= assigns[:front_addon] %></div>
+        </div>				  
+      <% end %>
+      
+      <%= number_input @form, 
+        @field, 
+        class: "text-input-with-addons #{if !(assigns[:front_addon] || assigns[:back_addon]), do: "rounded"}  #{if has_error, do: "has-error"}", 
+        placeholder: assigns[:placeholder],
+        step: assigns[:step]
+      %>
+
+      <%= if assigns[:back_addon] do %>
+        <div class="flex -mr-px">
+          <div class="text-input-back-addon"><%= assigns[:back_addon] %></div>
+        </div>				  
+      <% end %>
+    </div>		
+    
+
+    <%= if has_error do %>
+      <p class="text-red-500 text-xs italic"><%= error_tag @form, @field %></p>
+    <% end %>
+  </div>
+</div>
+

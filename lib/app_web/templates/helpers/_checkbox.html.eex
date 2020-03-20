@@ -1,0 +1,10 @@
+<div class="mb-5">
+  <label class="block text-gray-500 font-bold">
+    <%= checkbox @form, @field, class: "mr-2 leading-tight" %>
+
+    <span class="text-sm">
+      <% lab = if assigns[:label], do: assigns[:label], else: @field %>
+      <%= label @form, @field, lab %>
+    </span>
+  </label>
+</div>
