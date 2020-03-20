@@ -31,6 +31,7 @@
           method: :delete,
           class: "my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded" 
         %>
+        
       <% else %>
         <a href="<%= Routes.page_path(@conn, :pricing) %>" class="my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded">
           Pricing

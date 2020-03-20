@@ -21,23 +21,47 @@
           Dashboard
         </a>
 
-        <%= link "Account", 
-          to: Routes.pow_registration_path(@conn, :edit), 
-          class: "my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded" 
-        %>
+        <div 
+          x-data="{ open: false }" 
+          x-on:mouseleave="open = false"
+          class="relative"
+        >
+          <div 
+            x-on:mouseenter="open = true" 
+            class="cursor-pointer hover:bg-gray-100 p-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
 
-        <%= link "Logout", 
-          to: Routes.pow_session_path(@conn, :delete), 
-          method: :delete,
-          class: "my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded" 
-        %>
+          <div
+            x-show="open"
+            @click.away="open = false"
+            class="rounded bg-white py-2 w-48 shadow-md absolute right-0"
+          >
+            <%= link "Account", 
+              to: Routes.pow_registration_path(@conn, :edit), 
+              class: "block px-4 py-2 lg:my-0 text-gray-800 hover:bg-gray-200" 
+            %>
+
+            <%= link "Logout", 
+              to: Routes.pow_session_path(@conn, :delete), 
+              method: :delete,
+              class: "block px-4 py-2 lg:my-0 text-gray-800 hover:bg-gray-200" 
+            %>
+          </div>
+        </div>
       <% else %>
         <a href="<%= Routes.pow_session_path(@conn, :new) %>" class="my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded">
           Login
         </a>
-      <% end %>
 
-      
+        <a href="<%= Routes.pow_registration_path(@conn, :new) %>" class="my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded">
+          Register
+        </a>
+      <% end %>
     </div>
   </nav>
 </div>

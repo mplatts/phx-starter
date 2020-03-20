@@ -7,12 +7,8 @@ import SlimSelect from "slim-select";
 import { Socket } from "phoenix";
 import LiveSocket from "phoenix_live_view";
 
-// Stimulus
-import { definitionsFromContext } from "stimulus/webpack-helpers";
-import { Application } from "stimulus";
-const application = Application.start();
-const context = require.context("./controllers", true, /\.js$/);
-application.load(definitionsFromContext(context));
+// Alpine
+import "alpinejs";
 
 // Turbolinks
 var Turbolinks = require("turbolinks");

@@ -6,7 +6,7 @@
     <div class="min-h-screen flex flex-col">
       <div class="flex-grow">
         <%= render "_notifications.html", assigns %>
-        <%= render "_marketing_navbar.html", assigns %>
+        <%= render "_navbar.html", assigns %>
         <%= render @view_module, @view_template, assigns %>
       </div>
       
