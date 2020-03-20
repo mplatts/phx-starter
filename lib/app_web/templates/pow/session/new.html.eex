@@ -1,6 +1,14 @@
 <%= render_in AppWeb.HelpersView, "_floating_box.html", assigns do %>
-  <h2 class="h2">Login</h2>
-  <%= form_for @changeset, @action, [as: :user, class: "w-full mt-6"], fn f -> %>
+  <h2 class="h2">Sign in</h2>
+
+  <div class="my-3">
+    <%= PowAssent.Phoenix.ViewHelpers.authorization_link(@conn, "facebook", class: "facebook") %>
+  </div>
+
+  <hr class="my-6 text-gray-500" /> 
+
+  <%= form_for @changeset, @action, [as: :user, class: "w-full"], fn f -> %>
+    <h3 class="h3">Or sign in with email</h3>
     <%= render AppWeb.HelpersView, "_text_input.html", [form: f, field: Pow.Ecto.Schema.user_id_field(@changeset)] %>
     <%= render AppWeb.HelpersView, "_password_input.html", [form: f, field: :password] %>
 
@@ -19,7 +27,7 @@
     </div>
     
     <div class="flex items-center justify-between">
-      <%= submit "Login", class: "btn btn-green" %>
+      <%= submit "Sign in", class: "btn btn-green" %>
       <%= link "Register", to: Routes.pow_registration_path(@conn, :new), class: "text-gray-500 text-sm hover:underline" %>
     </div>
   <% end %>

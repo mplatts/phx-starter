@@ -82,6 +82,7 @@ button, a {
 @import "./slim-select.css";
 @import "./markdown.css";
 @import "./google-auth-button.css";
+@import "./facebook-auth-button.css";
 @import "../../deps/phoenix_live_view/assets/css/live_view.css";
 
 .help-icon {

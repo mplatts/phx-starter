@@ -55,7 +55,7 @@
         </div>
       <% else %>
         <a href="<%= Routes.pow_session_path(@conn, :new) %>" class="my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded">
-          Login
+          Sign in
         </a>
 
         <a href="<%= Routes.pow_registration_path(@conn, :new) %>" class="my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded">
