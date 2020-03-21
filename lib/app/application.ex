@@ -11,11 +11,17 @@ defmodule App.Application do
       # Start the Ecto repository
       App.Repo,
       # Start the endpoint when the application starts
-      AppWeb.Endpoint,
-      Pow.Store.Backend.MnesiaCache
+      AppWeb.Endpoint
       # Starts a worker by calling: App.Worker.start_link(arg)
       # {App.Worker, arg},
     ]
+
+    children =
+      if Mix.env() == :prod do
+        children ++ [Pow.Store.Backend.MnesiaCache]
+      else
+        children
+      end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

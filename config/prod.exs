@@ -16,6 +16,8 @@ config :app, AppWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :app, :pow, cache_store_backend: Pow.Store.Backend.MnesiaCache
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
