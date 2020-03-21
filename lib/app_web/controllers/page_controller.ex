@@ -9,6 +9,10 @@ defmodule AppWeb.PageController do
     render(conn, "index.html")
   end
 
+  def features(conn, _params) do
+    render(conn, "features.html")
+  end
+
   def pricing(conn, _params) do
     render(conn, "pricing.html")
   end

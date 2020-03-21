@@ -46,7 +46,8 @@ defmodule App.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:pow, "~> 1.0.19"},
       {:pow_assent, "~> 0.4.6"},
-      {:bamboo, "~> 1.4"}
+      {:bamboo, "~> 1.4"},
+      {:turbolinks_plug, "~> 0.1.0"},
     ]
   end
 

@@ -1,0 +1,5 @@
+<%= render_layout "app.html", assigns do %>
+
+  <%= render @view_module, @view_template, assigns %>
+
+<% end %> 

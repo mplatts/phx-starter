@@ -51,6 +51,10 @@ defmodule AppWeb do
       # <% end %>
       def render_in(module, template, assigns \\ %{}, do: yield),
         do: Phoenix.View.render(module, template, put_in(assigns[:yield], yield))
+
+      def render_layout(layout, assigns, do: content) do
+        render(AppWeb.LayoutView, layout, Map.put(assigns, :inner_layout, content))
+      end
     end
   end
 

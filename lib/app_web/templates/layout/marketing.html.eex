@@ -2,8 +2,9 @@
 <html lang="en">
   <%= render "_head.html", assigns %>
 
-  <body class="text-gray-900 leading-normal poppins-font bg-gray-100">
-    <div class="min-h-screen flex flex-col">
+  <body class="text-gray-900 leading-normal poppins-font">
+
+    <div class="body-wrap min-h-screen flex flex-col">
       <div class="flex-grow">
         <%= render "_notifications.html", assigns %>
         <%= render "_marketing_navbar.html", assigns %>

@@ -8,7 +8,7 @@
   <hr class="my-6 text-gray-500" /> 
 
   <%= form_for @changeset, @action, [as: :user, class: "w-full"], fn f -> %>
-    <h3 class="h3">Or register with email</h3>
+    <h3 class="h3 mb-5">Or register with email</h3>
     <%= render AppWeb.HelpersView, "_text_input.html", [form: f, field: Pow.Ecto.Schema.user_id_field(@changeset)] %>
     <%= render AppWeb.HelpersView, "_password_input.html", [form: f, field: :password] %>
     <%= render AppWeb.HelpersView, "_password_input.html", [form: f, field: :password_confirmation] %>

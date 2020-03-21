@@ -1,9 +1,8 @@
 <%= render_in AppWeb.HelpersView, "_floating_box.html", assigns do %>
-  <h2 class="h2">Account</h2>
+  <h2 class="h2">Change password</h2>
 
   <%= form_for @changeset, @action, [as: :user, class: "w-full mt-6"], fn f -> %>
     <%= render AppWeb.HelpersView, "_password_input.html", [form: f, field: :current_password] %>
-    <%= render AppWeb.HelpersView, "_text_input.html", [form: f, field: Pow.Ecto.Schema.user_id_field(@changeset)] %>
 
     <%= if @changeset.data.unconfirmed_email do %>
       <div>

@@ -19,6 +19,7 @@ defmodule AppWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug TurbolinksPlug
   end
 
   pipeline :marketing_layout do
@@ -40,8 +41,23 @@ defmodule AppWeb.Router do
     pow_assent_authorization_post_callback_routes()
   end
 
-  scope "/" do
+  # I want the account edit route to have the app.html layout. The others have the marketing.html layout
+  scope "/", Pow.Phoenix, as: "pow" do
     pipe_through [:browser]
+    get "/account/edit", RegistrationController, :edit
+  end
+
+  # Here I'm just renaming the routes to be more friendly (/register vs /registrations/new)
+  scope "/", Pow.Phoenix, as: "pow" do
+    pipe_through [:browser, :marketing_layout]
+    get "/register", RegistrationController, :new
+    post "/register", RegistrationController, :create
+    get "/sign-in", SessionController, :new
+    post "/sign-in", SessionController, :create
+  end
+
+  scope "/" do
+    pipe_through [:browser, :marketing_layout]
 
     pow_routes()
     pow_extension_routes()
@@ -52,6 +68,7 @@ defmodule AppWeb.Router do
     pipe_through [:browser, :marketing_layout]
     get "/", PageController, :index
     get "/pricing", PageController, :pricing
+    get "/features", PageController, :features
     get "/privacy", PageController, :privacy
     get "/terms", PageController, :terms
   end

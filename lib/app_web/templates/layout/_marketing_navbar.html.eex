@@ -1,58 +1,81 @@
-<div class="relative z-10 border-b border-gray-200 bg-white">
-  <nav class="container z-0 h-16 relative mx-auto flex items-center justify-between flex-wrap px-6 md:px-0">
-    <div class="flex items-center text-white mr-4 lg:mr-10">
-      <a href="<%= Routes.page_path(@conn, :index) %>">
-        <img class="h-8 my-2 md:my-4" style="position: relative; top: 2px;" src="<%= Routes.static_path(@conn, "/images/logo.png") %>" alt="Logo"/>
-      </a>
-    </div>
-    <div 
-      x-data="{ open: false}"
-      class="block relative lg:hidden"
-    >
-      <button 
-        x-on:click="open = true"
-        class="flex items-center px-3 py-2 border rounded text-black border-white hover:border-gray-100"
-      >
-        <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-      </button>
+<% menu_items = [
+  %{label: "Features", is_active: String.contains?(@conn.request_path, "features"), path: Routes.page_path(@conn, :features)},
+  %{label: "Pricing", is_active: String.contains?(@conn.request_path, "pricing"), path: Routes.page_path(@conn, :pricing)},
+] %>
 
-      <div
-        x-show="open"
-        @click.away="open = false"
-        class="rounded bg-white py-2 w-48 shadow-md absolute right-0"
-      >
-        <a href="<%= Routes.page_path(@conn, :pricing) %>" class="block px-4 py-2 lg:my-0 text-gray-800 hover:bg-gray-200">
-          Pricing
-        </a>
+<% logged_out_menu_items = [
+  %{label: "Register", is_active: String.contains?(@conn.request_path, "registrations/new"), path: Routes.pow_registration_path(@conn, :new)},
+  %{label: "Sign in", is_active: String.contains?(@conn.request_path, "sessions/new"), path: Routes.pow_session_path(@conn, :new)},
+] %>
 
-        <%= if Pow.Plug.current_user(@conn) do %>
-          <a href="<%= Routes.page_path(@conn, :dashboard) %>" class="block px-4 py-2 lg:my-0 text-gray-800 hover:bg-gray-200">
-            Dashboard
-          </a>
-        <% else %>
-          <a href="<%= Routes.pow_session_path(@conn, :new) %>" class="block px-4 py-2 lg:my-0 text-gray-800 hover:bg-gray-200">
-            Sign in
-          </a>
-        <% end %>
+<% logged_in_menu_items = [
+  %{label: "Go to app", is_active: String.contains?(@conn.request_path, "dashboard"), path: Routes.page_path(@conn, :dashboard)},
+] %>
+
+<% menu_items = if current_user(@conn), do: menu_items ++ logged_in_menu_items, else: menu_items ++ logged_out_menu_items %>
+
+<nav x-data="{ open: false }" class="relative bg-white">
+  <div class="max-w-screen-xl mx-auto ">
+    <div class="relative z-10 pb-8 bg-white lg:w-full">
+      <div class="pt-6 px-4 sm:px-6 lg:px-8">
+        <nav class="relative flex items-center justify-between sm:h-10 lg:justify-start">
+          <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
+            <div class="flex items-center justify-between w-full md:w-auto">
+              <a href="<%= Routes.page_path(@conn, :index) %>">
+                <img class="h-8 w-auto sm:h-10" src="/images/logo.png" alt="" />
+              </a>
+              <div class="-mr-2 flex items-center md:hidden">
+                <button @click="open = true" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                  <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="hidden md:block md:ml-10 md:pr-4">
+            <%= for menu_item <- menu_items do %>
+              <a 
+                href="<%= menu_item.path %>" 
+                class="mr-8 font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out <%= if menu_item.is_active, do: "text-orange-600 hover:text-orange-900", else: "hover:text-gray-900 focus:text-gray-900" %>"
+              >
+                <%= menu_item.label %>
+              </a>  
+            <% end %>
+          </div>
+        </nav>
       </div>
+
+      <div x-show="open" x-transition:enter="duration-150 ease-out" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="duration-100 ease-in" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+        <div class="rounded-lg shadow-md">
+          <div class="rounded-lg bg-white shadow-xs">
+            <div class="px-5 pt-4 flex items-center justify-between">
+              <div>
+                <img class="h-8 w-auto" src="/images/logo.png" alt="" />
+              </div>
+              <div class="-mr-2">
+                <button @click="open = false" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                  <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="px-2 pt-2 pb-3">
+              <%= for menu_item <- menu_items do %>
+                <a href="<%= menu_item.path %>" class="mb-1 block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition duration-150 ease-in-out"><%= menu_item.label %></a>
+              <% end %>
+            </div>
+            <div>
+              <a href="#" class="block w-full px-5 py-3 text-center font-medium text-orange-600 bg-gray-50 hover:bg-gray-100 hover:text-orange-700 focus:outline-none focus:bg-gray-100 focus:text-orange-700 transition duration-150 ease-in-out">
+                Log in
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
     </div>
-
-    <div id="nav-content" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto lg:block hidden">
-      <div class="lg:flex-grow"></div>
-
-      <a href="<%= Routes.page_path(@conn, :pricing) %>" class="my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded">
-        Pricing
-      </a>
-
-      <%= if Pow.Plug.current_user(@conn) do %>
-        <a href="<%= Routes.page_path(@conn, :dashboard) %>" class="my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded">
-          Dashboard
-        </a>
-      <% else %>
-        <a href="<%= Routes.pow_session_path(@conn, :new) %>" class="my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded">
-          Sign in
-        </a>
-      <% end %>
-    </div>
-  </nav>
-</div>
+  </div>
+</nav>
