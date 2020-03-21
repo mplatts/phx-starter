@@ -5,18 +5,43 @@
         <img class="h-8 my-2 md:my-4" style="position: relative; top: 2px;" src="<%= Routes.static_path(@conn, "/images/logo.png") %>" alt="Logo"/>
       </a>
     </div>
-    <div class="block lg:hidden">
-      <button class="nav-toggle flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-gray-500">
+    <div 
+      x-data="{ open: false}"
+      class="block relative lg:hidden"
+    >
+      <button 
+        x-on:click="open = true"
+        class="flex items-center px-3 py-2 border rounded text-black border-white hover:border-gray-100"
+      >
         <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
       </button>
+
+      <div
+        x-show="open"
+        @click.away="open = false"
+        class="rounded bg-white py-2 w-48 shadow-md absolute right-0"
+      >
+        <a href="<%= Routes.page_path(@conn, :dashboard) %>" class="block px-4 py-2 lg:my-0 text-gray-800 hover:bg-gray-200">
+          Dashboard
+        </a>
+
+        <%= link "Account", 
+          to: Routes.pow_registration_path(@conn, :edit), 
+          class: "block px-4 py-2 lg:my-0 text-gray-800 hover:bg-gray-200" 
+        %>
+
+        <%= link "Logout", 
+          to: Routes.pow_session_path(@conn, :delete), 
+          method: :delete,
+          class: "block px-4 py-2 lg:my-0 text-gray-800 hover:bg-gray-200" 
+        %>
+      </div>
     </div>
 
     <div id="nav-content" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto lg:block hidden">
-      <div class="lg:flex-grow">
-        
-      </div>
+      <div class="lg:flex-grow"></div>
 
-      <%= if Pow.Plug.current_user(@conn) do %>
+      <%= if current_user(@conn) do %>
         <a href="<%= Routes.page_path(@conn, :dashboard) %>" class="my-4 px-5 py-2 lg:my-0 text-gray-800 hover:bg-gray-200 rounded">
           Dashboard
         </a>
@@ -28,18 +53,17 @@
         >
           <div 
             x-on:mouseenter="open = true" 
-            class="cursor-pointer hover:bg-gray-100 p-2"
+            x-on:click="open = true" 
+            class="flex items-center"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
+            <%= render AppWeb.HelpersView, "_avatar.html", user: current_user(@conn), size: "w-10 h-10" %>
           </div>
 
           <div
             x-show="open"
             @click.away="open = false"
             class="rounded bg-white py-2 w-48 shadow-md absolute right-0"
+            style="margin-top: -10px;"
           >
             <%= link "Account", 
               to: Routes.pow_registration_path(@conn, :edit), 
@@ -65,17 +89,3 @@
     </div>
   </nav>
 </div>
-
-
-<script>
-
-		//Javascript to toggle the menu
-    var triggers = document.getElementsByClassName('nav-toggle');
-    console.log()
-
-    for( var i = 0; i < triggers.length; i++) {
-      triggers[i].onclick = function(){
-        document.getElementById("nav-content").classList.toggle("hidden");
-      }
-    }
-	</script>

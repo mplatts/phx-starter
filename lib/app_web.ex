@@ -43,6 +43,8 @@ defmodule AppWeb do
       import AppWeb.Gettext
       alias AppWeb.Router.Helpers, as: Routes
 
+      import Pow.Plug, only: [current_user: 1]
+
       # Helper to create components
       # <%= render_in AppWeb.HelpersView, "_card.html", assigns do %>
       #   some HTML

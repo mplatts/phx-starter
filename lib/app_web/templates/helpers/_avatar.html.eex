@@ -1,9 +1,14 @@
-<div class="<%= if assigns[:size], do: assigns[:size], else: "w-8 h-8" %> relative inline-block">
-  <div class="group w-full h-full rounded-full overflow-hidden text-center bg-purple table cursor-pointer">
-    <%= if !!@user.avatar do %>
+<%= if !!@user.avatar do %>
+  <div class="<%= if assigns[:size], do: assigns[:size], else: "w-8 h-8" %> relative inline-block">
+    <div class="group w-full h-full rounded-full overflow-hidden text-center bg-purple table cursor-pointer border-2 focus:outline-none hover:border-blue-500">
       <img src="<%= @user.avatar %>" alt="Profile avatar" class="object-cover object-center w-full h-full visible group-hover:hidden" />  
-    <% else %>
-      <span class="table-cell text-white font-bold align-middle"><%= App.User.initials(@user) %></span>
-    <% end %>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="hover:bg-gray-100 p-2 rounded-full cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </svg>
+  </div>
+<% end %>
