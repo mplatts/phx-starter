@@ -1,26 +1,16 @@
 const path = require("path");
 const glob = require("glob");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const globAll = require("glob-all");
 
-// Custom PurgeCSS extractor for Tailwind that allows special characters in
-// class names.
-//
-// https://github.com/FullHuman/purgecss#extractor
-class TailwindExtractor {
-  static extract(content) {
-    return content.match(/[\w-/:]+(?<!:)/g) || [];
-  }
-}
-
 module.exports = (env, options) => ({
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: false }),
+      new TerserPlugin(),
       new OptimizeCSSAssetsPlugin({}),
       new PurgecssPlugin({
         paths: globAll.sync([
@@ -31,7 +21,7 @@ module.exports = (env, options) => ({
         ]),
         extractors: [
           {
-            extractor: TailwindExtractor,
+            extractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
             extensions: ["html", "js", "eex", "ex"]
           }
         ]

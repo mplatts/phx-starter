@@ -1,3 +1,18 @@
+App
+|
+|--Public
+|    |
+|    |-- Index
+|    |-- Features
+|    |-- Pricing
+|    |-- Sign in
+|    |-- Register
+|
+|--Auth
+|    |
+|    |-- Sign in
+
+
 # Setup
 ## ENV
 Add env vars

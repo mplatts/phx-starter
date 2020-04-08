@@ -46,8 +46,15 @@ defmodule App.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:pow, "~> 1.0.19"},
       {:pow_assent, "~> 0.4.6"},
+      {:pow_postgres_store, github: "ZennerIoT/pow_postgres_store"},
       {:bamboo, "~> 1.4"},
       {:turbolinks_plug, "~> 0.1.0"},
+      {:distillery, "~> 2.1"},
+      {:timex, "~> 3.1"},
+      {:inflex, "~> 2.0.0"},
+      {:tesla, "~> 1.3.0"},
+      {:hackney, "~> 1.10"},
+      {:quantum, "~> 3.0-rc"}
     ]
   end
 

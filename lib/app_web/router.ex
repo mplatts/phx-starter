@@ -4,7 +4,7 @@ defmodule AppWeb.Router do
   use PowAssent.Phoenix.Router
 
   use Pow.Extension.Phoenix.Router,
-    extensions: [PowResetPassword, PowEmailConfirmation]
+    extensions: [PowResetPassword]
 
   pipeline :skip_csrf_protection do
     plug :accepts, ["html"]

@@ -4,17 +4,24 @@
 # remember to add this file to your .gitignore.
 use Mix.Config
 
-database_url =
-  System.get_env("DATABASE_URL") ||
-    raise """
-    environment variable DATABASE_URL is missing.
-    For example: ecto://USER:PASS@HOST/DATABASE
-    """
+# database_url =
+#   System.get_env("DATABASE_URL") ||
+#     raise """
+#     environment variable DATABASE_URL is missing.
+#     For example: ecto://USER:PASS@HOST/DATABASE
+#     """
+
+# config :app, App.Repo,
+#   # ssl: true,
+#   url: database_url,
+#   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :app, App.Repo,
-  # ssl: true,
-  url: database_url,
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+  username: System.get_env("POSTGRES_USERNAME"),
+  password: System.get_env("POSTGRES_PASSWORD"),
+  database: System.get_env("POSTGRES_DATABASE"),
+  socket_dir: System.get_env("SOCKET_DIR"),
+  pool_size: 15
 
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
@@ -24,9 +31,10 @@ secret_key_base =
     """
 
 config :app, AppWeb.Endpoint,
-  http: [
-    port: String.to_integer(System.get_env("PORT") || "4000"),
-    transport_options: [socket_opts: [:inet6]]
+  url: [
+    host: System.get_env("WEB_HOST"),
+    port: 443,
+    scheme: "https"
   ],
   secret_key_base: secret_key_base
 
@@ -42,10 +50,10 @@ config :app, AppWeb.Endpoint,
 
 config :app, App.Mailer,
   adapter: Bamboo.MailgunAdapter,
-  api_key: {:system, "MAILGUN_API_KEY"},
-  domain: {:system, "MAILGUN_DOMAIN"},
+  api_key: System.get_env("MAILGUN_API_KEY"),
+  domain: System.get_env("MAILGUN_DOMAIN")
 
 config :app, AppWeb.Pow.Mailer,
   adapter: Bamboo.MailgunAdapter,
   api_key: System.get_env("MAILGUN_API_KEY"),
-  domain: System.get_env("MAILGUN_DOMAIN"),
+  domain: System.get_env("MAILGUN_DOMAIN")

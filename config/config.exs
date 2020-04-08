@@ -13,7 +13,7 @@ config :app,
 # Configures the endpoint
 config :app, AppWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "Y58gPfpq8rqzT9KTCnrOy0z1QwVaUyjsA6Z+4iz18LhmGrKZb/UMW1KKzHLIFIim",
+  secret_key_base: "Y58gPfpq8rqzT9KTCnrOy0z1QwVaUyjsA6Z+4iz18LhmGrKZb/UMW1KKzHLIFIfw",
   render_errors: [view: AppWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: App.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [signing_salt: "P9Wps1pg"]
@@ -27,14 +27,17 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Pow
+config :pow, Pow.Postgres.Store, repo: App.Repo
+
 config :app, :pow,
   user: App.Users.User,
   repo: App.Repo,
-  extensions: [PowResetPassword, PowEmailConfirmation],
+  extensions: [PowResetPassword],
   controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks,
   mailer_backend: AppWeb.Pow.Mailer,
   routes_backend: AppWeb.Pow.Routes,
-  web_module: AppWeb
+  web_module: AppWeb,
+  cache_store_backend: Pow.Postgres.Store
 
 config :app, :pow_assent,
   providers: [
@@ -43,6 +46,14 @@ config :app, :pow_assent,
       client_secret: System.get_env("FACEBOOK_SECRET"),
       strategy: Assent.Strategy.Facebook
     ]
+  ]
+
+config :tesla, adapter: Tesla.Adapter.Hackney
+
+# Add cron jobs here
+config :app, App.Scheduler,
+  jobs: [
+    # {"0 0 * * SUN", {App.WeeklyDigestCron, :init, []}}
   ]
 
 # Import environment specific config. This must remain at the bottom
